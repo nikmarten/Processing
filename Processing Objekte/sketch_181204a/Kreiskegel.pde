@@ -1,4 +1,4 @@
-class Kreiskegel extends Grundform {
+class Kreiskegel extends Grundformen {
   
 
   Kreiskegel(int segments, float r, float h) {
@@ -9,24 +9,23 @@ class Kreiskegel extends Grundform {
 
   void render()
   {
-    float halfHeight = height / 2;
     float angle = 2*PI/segmentsCircle;
     // draw Bottom shape
     beginShape(TRIANGLE_FAN);
-    vertex(0, 0, -halfHeight);
+    vertex(0, 0, 0);
     for (int i = 0; i <= segmentsCircle; i++) {
       float x = radius * cos(i * angle);
       float y = radius * sin(i * angle);
-      vertex(x, y, -halfHeight);
+      vertex(x, y, 0);
     }
     endShape();
     //draw Top shape
     beginShape(TRIANGLE_FAN);
-    vertex(0, 0, halfHeight);
+    vertex(0, 0, height);
     for (int i = 0; i <= segmentsCircle; i++) {
       float x = radius * cos(i * angle);
       float y = radius * sin(i * angle);
-      vertex(x, y, -halfHeight);
+      vertex(x, y, 0);
     }
     endShape();
   }
