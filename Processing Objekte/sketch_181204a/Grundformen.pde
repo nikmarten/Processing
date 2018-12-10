@@ -1,3 +1,7 @@
-class Grundform{
+abstract class Grundform {
 
+  
+  int segmentsCircle;
+  float height;
+  float radius;
 }

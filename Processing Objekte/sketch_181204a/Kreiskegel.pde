@@ -1,28 +1,33 @@
- class Kreiskegel extends Grundform{
- 
- void render(int sidesBottom, float r, float h)
+class Kreiskegel extends Grundform {
+  
+
+  Kreiskegel(int segments, float r, float h) {
+    this.segmentsCircle = segments;
+    this.radius = r;
+    this.height = h;
+  }
+
+  void render()
   {
-    float angle = 360 /sidesBottom;
-    float halfHeight = h / 2;
-    float angle2 = 2*PI/sidesBottom;
-    // draw top shape
+    float halfHeight = height / 2;
+    float angle = 2*PI/segmentsCircle;
+    // draw Bottom shape
     beginShape(TRIANGLE_FAN);
     vertex(0, 0, -halfHeight);
-    for (int i = 0; i <= sidesBottom; i++) {
-      float x = r * cos(i * angle2);
-      float y = r * sin(i * angle2);
+    for (int i = 0; i <= segmentsCircle; i++) {
+      float x = radius * cos(i * angle);
+      float y = radius * sin(i * angle);
       vertex(x, y, -halfHeight);
     }
-    vertex(0,0,halfHeight);
     endShape();
+    //draw Top shape
     beginShape(TRIANGLE_FAN);
-    vertex(0, 0, -halfHeight+h);
-    for (int i = 0; i <= sidesBottom; i++) {
-      float x = r * cos(i * angle2);
-      float y = r * sin(i * angle2);
+    vertex(0, 0, halfHeight);
+    for (int i = 0; i <= segmentsCircle; i++) {
+      float x = radius * cos(i * angle);
+      float y = radius * sin(i * angle);
       vertex(x, y, -halfHeight);
     }
-    vertex(0,0,halfHeight);
     endShape();
   }
- }
+}
