@@ -5,8 +5,8 @@ class Pfeile{
   Zylinder zylinder;
   
   public Pfeile(color farbe){
-    kreiskegel = new Kreiskegel(20, 100, 200);
-    zylinder = new Zylinder(20, 6, 50, 300);
+    kreiskegel = new Kreiskegel(10, 40, 200);
+    zylinder = new Zylinder(10, 6, 20, 350);
     this.farbe = farbe;
   }
   
