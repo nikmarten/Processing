@@ -2,10 +2,12 @@ float scale=1;
 float value;
 Pfeile pfeilX, pfeilY, pfeilZ;
 int eyeX, eyeY;
+boolean toggleStroke;
+String s = "Controls:\nB = Increase bodysegments\nN = Decrease bodysegments\nS = Increase circlesegments\nA = Decrease circlesegments\nH = Increase height\nJ = Decrease Height\nX = Toggle stroke";
 
 
 void setup() {
-  size(1000, 1000, P3D);
+  size(800, 800, P3D);
   surface.setResizable(true);
   pfeilX = new Pfeile(color(255, 0, 0));
   pfeilY = new Pfeile(color(0, 255, 0));
@@ -13,20 +15,20 @@ void setup() {
 }
 void draw() {
   background(25);
+  fill(255);
+  text(s,10,10,200,120);
+  pushMatrix();
   camera(eyeX, eyeY, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0);
   translate(width/2, height/2); 
   scale(scale);
-  pushMatrix();
+  toggleStroke();
+  pfeilZ.render();
+  rotateY(-PI/2.0+PI);
   pfeilX.render();
-  popMatrix();
-  rotateY(-(PI/2.0+PI));
-  pushMatrix();
+  rotateX(-PI/2.0); 
   pfeilY.render();
   popMatrix();
-  rotateX(PI/2.0);
-  pushMatrix();
-  pfeilZ.render();
-  popMatrix();
+  
 }
 
 
@@ -36,8 +38,8 @@ void mouseWheel(MouseEvent event) {
 
 void mouseDragged(MouseEvent event) {
   if (mouseX<width && mouseX > 0 && mouseY<height && mouseY > 0) {
-    eyeX -= (event.getX()-pmouseX)*2;
-    eyeY -= (event.getY()-pmouseY)*2;
+    eyeX -= (event.getX()-pmouseX);
+    eyeY -= (event.getY()-pmouseY);
   }
 }
 
@@ -74,6 +76,14 @@ void increaseHeight(int index) {
   pfeilZ.kreiskegel.setBodyHeight(pfeilX.kreiskegel.getBodyHeight()+index);
 }
 
+void toggleStroke(){
+  if (toggleStroke) {
+    strokeWeight(0);
+  } else {
+    strokeWeight(1);
+  }
+}
+
 void keyPressed() {
   if (key == 'r') {
     increaseRadius(5);
@@ -98,5 +108,8 @@ void keyPressed() {
   }
   if (key == 'j') {
     increaseHeight(-5);
+  }
+  if (key == 'x'){
+    toggleStroke =! toggleStroke;
   }
 }
