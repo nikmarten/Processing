@@ -6,24 +6,21 @@ Pfeile pfeilX, pfeilY, pfeilZ;
 int eyeX, eyeY;
 boolean toggleStroke;
 String s = "Controls:\nB = Increase bodysegments\nN = Decrease bodysegments\nS = Increase circlesegments\nA = Decrease circlesegments\nH = Increase height\nJ = Decrease Height\nX = Toggle stroke";
+double rotationX, rotationY;
 
 PeasyCam cam;
 
 void setup() {
-  fullScreen(P3D);
-  //size(800, 800, P3D);
+  //fullScreen(P3D);
+  size(800, 800, P3D);
   surface.setResizable(true);
-  cam = new PeasyCam(this, width/2, height/2, 0 , 1500);
+  cam = new PeasyCam(this, width/2, height/2, 0, 1500);
   pfeilX = new Pfeile(color(255, 0, 0));
   pfeilY = new Pfeile(color(0, 255, 0));
   pfeilZ = new Pfeile(color(0, 0, 255));
 }
 void draw() {
   background(25);
-  cam.beginHUD();
-  fill(255);
-  text(s,10,10,200,120);
-  cam.endHUD();
   pushMatrix();
   //camera(eyeX, eyeY, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0);
   translate(width/2, height/2); 
@@ -35,7 +32,11 @@ void draw() {
   rotateX(-PI/2.0); 
   pfeilY.render();
   popMatrix();
-  
+  cam.beginHUD();
+  fill(255);
+  text(s, 10, 10, 200, 120);
+  cam.endHUD();
+  setRotationsCam();
 }
 
 
@@ -83,7 +84,7 @@ void increaseHeight(int index) {
   pfeilZ.kreiskegel.setBodyHeight(pfeilX.kreiskegel.getBodyHeight()+index);
 }
 
-void toggleStroke(){
+void toggleStroke() {
   if (toggleStroke) {
     strokeWeight(0);
   } else {
@@ -116,7 +117,31 @@ void keyPressed() {
   if (key == 'j') {
     increaseHeight(-5);
   }
-  if (key == 'x'){
+  if (key == 'x') {
     toggleStroke =! toggleStroke;
   }
+
+  if (key == CODED) {
+    if (keyCode == UP) {
+      rotationX -= PI/90;
+      cam.setRotations(rotationX, rotationY, 0);
+    }
+    if (keyCode == DOWN) {
+      rotationX += PI/90;
+      cam.setRotations(rotationX, rotationY, 0);
+    }
+    if (keyCode == LEFT) {
+      rotationY += PI/90;
+      cam.setRotations(rotationX, rotationY, 0);
+    }
+    if (keyCode == RIGHT) {
+      rotationY -= PI/90;
+      cam.setRotations(rotationX, rotationY, 0);
+    }
+  }
+}
+
+void setRotationsCam(){
+  rotationX = cam.getRotations()[0];
+  rotationY = cam.getRotations()[1];
 }
