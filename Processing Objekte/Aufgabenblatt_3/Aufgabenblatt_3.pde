@@ -1,3 +1,5 @@
+import peasy.*;
+
 float scale=1;
 float value;
 Pfeile pfeilX, pfeilY, pfeilZ;
@@ -5,20 +7,25 @@ int eyeX, eyeY;
 boolean toggleStroke;
 String s = "Controls:\nB = Increase bodysegments\nN = Decrease bodysegments\nS = Increase circlesegments\nA = Decrease circlesegments\nH = Increase height\nJ = Decrease Height\nX = Toggle stroke";
 
+PeasyCam cam;
 
 void setup() {
-  size(800, 800, P3D);
+  fullScreen(P3D);
+  //size(800, 800, P3D);
   surface.setResizable(true);
+  cam = new PeasyCam(this, width/2, height/2, 0 , 1500);
   pfeilX = new Pfeile(color(255, 0, 0));
   pfeilY = new Pfeile(color(0, 255, 0));
   pfeilZ = new Pfeile(color(0, 0, 255));
 }
 void draw() {
   background(25);
+  cam.beginHUD();
   fill(255);
   text(s,10,10,200,120);
+  cam.endHUD();
   pushMatrix();
-  camera(eyeX, eyeY, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0);
+  //camera(eyeX, eyeY, (height/2.0) / tan(PI*30.0 / 180.0), width/2.0, height/2.0, 0, 0, 1, 0);
   translate(width/2, height/2); 
   scale(scale);
   toggleStroke();
@@ -33,7 +40,7 @@ void draw() {
 
 
 void mouseWheel(MouseEvent event) {
-  scale = scale - (event.getCount()*0.05);
+  //scale = scale - (event.getCount()*0.05);
 }
 
 void mouseDragged(MouseEvent event) {
